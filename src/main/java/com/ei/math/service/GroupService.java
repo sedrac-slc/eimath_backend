@@ -29,6 +29,10 @@ public class GroupService{
         return groupRepository.findAllByUserPeople(pageable,people);
     }
     
+    public Page<Group> findAllMember(Pageable pageable,UserPeople people) {
+        return groupRepository.findGroupsByPerson(pageable,people);
+    }    
+    
     @Transactional
     public Group save(Group group){
         return groupRepository.save(group);

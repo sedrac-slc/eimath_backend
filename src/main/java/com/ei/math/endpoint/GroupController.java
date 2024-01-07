@@ -39,6 +39,11 @@ public class GroupController {
         return ResponseEntity.ok(groupService.findAll(pageable, UserPeople.uuidAllNull(people)));
     }
     
+    @GetMapping("/page/members")
+    public ResponseEntity<Page<Group>> findAllPageMember(Pageable pageable,@RequestParam String people){
+        return ResponseEntity.ok(groupService.findAllMember(pageable, UserPeople.uuidAllNull(people)));
+    }    
+    
     @PostMapping
     public ResponseEntity<Group> store(@RequestBody Group group){
         return ResponseEntity.ok(groupService.save(group));

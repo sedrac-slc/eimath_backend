@@ -1,6 +1,8 @@
 package com.ei.math.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
@@ -31,6 +33,7 @@ public class Group implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
+    @Column(nullable = false, unique = true)
     private String name;
 
     private LocalDateTime createdAt;
@@ -40,7 +43,7 @@ public class Group implements Serializable {
     private UserPeople userPeople;
     
     @JsonIgnore
-    @OneToMany(mappedBy = "group")
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
     private List<Member> elements;    
 
     public Group(String name, UserPeople userPeople) {

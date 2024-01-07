@@ -31,7 +31,7 @@ public class DataSourceRunner implements ApplicationRunner{
     }
     
     private void seed(){
-                UserPeople personOne = userService.save(new UserPeople("Sedrac Calupeteca", "slcsedrac@gmail.com", "936269780", LocalDate.of(1998, Month.JANUARY, 31), GenderEnum.MALE, "sedrac", "12345678"));
+        UserPeople personOne = userService.save(new UserPeople("Sedrac Calupeteca", "slcsedrac@gmail.com", "936269780", LocalDate.of(1998, Month.JANUARY, 31), GenderEnum.MALE, "sedrac", "12345678"));
         UserPeople personTwo = userService.save(new UserPeople("Lucas Calupeteca", "sedraccalupeteca@gmail.com", "958360876", LocalDate.of(1998, Month.JANUARY, 31), GenderEnum.MALE, "lucas", "12345678"));
         UserPeople personThree = userService.save(new UserPeople("Sandra Gomes", "sandragomes@yahoo.com", "923451234", LocalDate.of(2000, Month.MARCH, 20), GenderEnum.FEMALE, "sandra", "12345678"));
         UserPeople personFour = userService.save(new UserPeople("Bela López", "belalopez@gmail.com", "958960876", LocalDate.of(2001, Month.AUGUST, 11), GenderEnum.FEMALE, "bela", "12345678"));
@@ -42,6 +42,7 @@ public class DataSourceRunner implements ApplicationRunner{
         Group grupTwo = groupService.save(new Group("Grupo teoria de radical",personOne));
         Group grupThree =groupService.save(new Group("Grupo de resolução de equação",personOne));
         Group grupFour =groupService.save(new Group("Grupo de resolução de radical",personTwo));
+        groupService.save(new Group("Grupo de resolução de equação II",personTwo));
         
         menberService.save(new Member(personThree,grupOne));
         menberService.save(new Member(personFive,grupOne));
@@ -59,7 +60,7 @@ public class DataSourceRunner implements ApplicationRunner{
     
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        //seed();
+        seed();
     }
     
 }
