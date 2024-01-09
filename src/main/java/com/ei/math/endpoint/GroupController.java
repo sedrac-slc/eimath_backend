@@ -3,7 +3,6 @@ package com.ei.math.endpoint;
 import com.ei.math.entity.Group;
 import com.ei.math.entity.UserPeople;
 import com.ei.math.service.GroupService;
-import com.ei.math.util.ResponseSimple;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -36,12 +35,12 @@ public class GroupController {
     
     @GetMapping("/page")
     public ResponseEntity<Page<Group>> findAllPage(Pageable pageable,@RequestParam String people){
-        return ResponseEntity.ok(groupService.findAll(pageable, UserPeople.uuidAllNull(people)));
+        return ResponseEntity.ok(groupService.findAll(pageable,new UserPeople(people)));
     }
     
     @GetMapping("/page/members")
     public ResponseEntity<Page<Group>> findAllPageMember(Pageable pageable,@RequestParam String people){
-        return ResponseEntity.ok(groupService.findAllMember(pageable, UserPeople.uuidAllNull(people)));
+        return ResponseEntity.ok(groupService.findAllMember(pageable, new UserPeople(people)));
     }    
     
     @PostMapping

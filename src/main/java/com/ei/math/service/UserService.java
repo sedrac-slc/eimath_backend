@@ -36,5 +36,9 @@ public class UserService{
     public Optional<UserPeople> findById(String id){
         return userRepository.findById(UUID.fromString(id));
     }    
+
+    public UserPeople findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
     
 }

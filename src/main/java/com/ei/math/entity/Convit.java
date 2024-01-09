@@ -25,6 +25,8 @@ public class Convit implements Serializable{
     @GeneratedValue(strategy = GenerationType.AUTO)   
     private UUID id;
     
+    private String email;
+    
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserPeople userPeople;
@@ -34,7 +36,7 @@ public class Convit implements Serializable{
     private Group group;  
     
     @Column(columnDefinition = "tinyint(1) default 0")
-    private Boolean is_accept;    
+    private Boolean is_system;    
     
     @Column(columnDefinition = "datetime default now()")
     private LocalDateTime createdAt;

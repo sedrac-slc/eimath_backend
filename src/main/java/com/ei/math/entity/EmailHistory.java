@@ -12,18 +12,21 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
 @Table(name = "tb_email_history")
+@NoArgsConstructor
+@AllArgsConstructor
 public class EmailHistory implements Serializable{
-      private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private UUID id;
-    private String ownerRef;
     private String emailFrom;
     private String emailTo;
     private String subject;
@@ -32,4 +35,9 @@ public class EmailHistory implements Serializable{
     private LocalDateTime sendDateEmail;
     @Enumerated(EnumType.STRING)
     private StatusEmailEnum statusEmail;  
+
+    public EmailHistory(String emailFrom, String emailTo, String subject, String text) {
+        this(null, emailFrom, emailTo, subject, text, null, null);
+    }
+    
 }

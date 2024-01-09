@@ -3,6 +3,7 @@ package com.ei.math.service;
 import com.ei.math.entity.EmailHistory;
 import com.ei.math.enums.StatusEmailEnum;
 import com.ei.math.repository.EmailHistoryRepository;
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -39,13 +40,12 @@ public class EmailHistoryService {
             emailModel.setStatusEmail(StatusEmailEnum.SENT);
         } catch (MailException e){
             emailModel.setStatusEmail(StatusEmailEnum.ERROR);
-        } finally {
-            return emailRepository.save(emailModel);
         }
+        return emailRepository.save(emailModel);
     }
     
     @Transactional
-    public EmailHistory sendEmailWithHtml(EmailHistory emailModel) {
+    public EmailHistory sendEmailWithHtml(EmailHistory emailModel){
         emailModel.setSendDateEmail(LocalDateTime.now());
         try{
             MimeMessageHelper message = new MimeMessageHelper(emailSender.createMimeMessage());
@@ -55,11 +55,10 @@ public class EmailHistoryService {
             message.setText(emailModel.getText(), true);
             emailSender.send(message.getMimeMessage());
             emailModel.setStatusEmail(StatusEmailEnum.SENT);
-        } catch (MailException e){
+        } catch (MessagingException | MailException e){
             emailModel.setStatusEmail(StatusEmailEnum.ERROR);
-        } finally {
-            return emailRepository.save(emailModel);
         }
+         return emailRepository.save(emailModel);    
     }  
 
     public Page<EmailHistory> findAll(Pageable pageable) {

@@ -65,16 +65,19 @@ public class UserPeople implements UserDetails, Serializable{
     private String username;
     private String password;
     
-    public static UserPeople uuidAllNull(String userId) {
-        return new UserPeople(UUID.fromString(userId), null, null, null, null,null, null, null, null, null, null);
-    }
-    
+    @Column(nullable = true)
+    private String image;
+
     public UserPeople(String userId) {
        this.id = UUID.fromString(userId);
     }
+    
+    public UserPeople(UUID userId) {
+       this.id = userId;
+    }    
 
     public UserPeople(String name, String email, String phone, LocalDate birthDay, GenderEnum gender, String username, String password) {
-        this(null, name, email, phone, birthDay, gender, username, password, null, null, null);
+        this(null, name, email, phone, birthDay, gender, username, password, null, null, null,null);
     }    
     
     @Order(2)

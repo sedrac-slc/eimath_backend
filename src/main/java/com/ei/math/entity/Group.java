@@ -46,6 +46,10 @@ public class Group implements Serializable {
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
     private List<Member> elements;    
 
+    public Group(String id) {
+        this.id = UUID.fromString(id);
+    }  
+    
     public Group(String name, UserPeople userPeople) {
         this.name = name;
         this.userPeople = userPeople;
