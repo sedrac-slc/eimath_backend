@@ -2,7 +2,6 @@ package com.ei.math.endpoint;
 
 import com.ei.math.entity.Convit;
 import com.ei.math.entity.EmailHistory;
-import com.ei.math.entity.UserPeople;
 import com.ei.math.service.ConvitService;
 import com.ei.math.service.EmailHistoryService;
 import com.ei.math.service.UserService;
@@ -17,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/equation")
+@RequestMapping("/convits")
 @CrossOrigin(origins = "*")
 public class ConvitController {
     
@@ -34,11 +33,12 @@ public class ConvitController {
     @PostMapping
     public ResponseEntity<Convit> store(@RequestBody Convit convit){
         Optional.ofNullable(userService.findByEmail(convit.getEmail())).ifPresentOrElse(it -> {
-            
+            convit.setIs_system(Boolean.TRUE);
         }, () -> {
             emailHistoryService.sendEmailWithHtml(new EmailHistory(
-             emailFrom, convit.getEmail(), "Bem vindo",""
+             emailFrom, convit.getEmail(), "Bem vindo","Olá"
             ));
+            convit.setIs_system(Boolean.FALSE);
         });
         return ResponseEntity.ok(convitService.save(convit));
     }

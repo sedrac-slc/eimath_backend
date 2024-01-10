@@ -50,13 +50,15 @@ public class SecurityConfig {
         JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter();
         jwtAuthenticationFilter.setAuthenticationManager(authManager);
         jwtAuthenticationFilter.setFilterProcessesUrl("/login");
-        return http.cors(c -> c.configurationSource(corsConfigurationSource()))
-                .csrf(c -> c.disable())
-                .authorizeHttpRequests(
-                    c -> c.requestMatchers("/emails/**", "/authorization/**", "/arithmetic", "/radical", "/equation")
-                          .permitAll().anyRequest().authenticated()
-                )
-                .sessionManagement(c -> c.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        return http.cors(c -> c.configurationSource(corsConfigurationSource())).csrf(c -> c.disable())
+                .authorizeHttpRequests(c -> c.requestMatchers(
+                 "/emails/**", 
+                 "/authorization/**", 
+                 "/arithmetic/**", 
+                 "/radical/**", 
+                 "/equation/**",
+                 "/pub/**").permitAll().anyRequest().authenticated()
+                ).sessionManagement(c -> c.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilter(jwtAuthenticationFilter)
                 .addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
