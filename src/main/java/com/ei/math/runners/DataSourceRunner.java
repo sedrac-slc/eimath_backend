@@ -60,7 +60,7 @@ public class DataSourceRunner implements ApplicationRunner{
     
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        seed();
+       // seed();
     }
     
 }

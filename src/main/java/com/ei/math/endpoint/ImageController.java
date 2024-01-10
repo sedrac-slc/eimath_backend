@@ -25,14 +25,6 @@ public class ImageController {
                 .contentType(MediaType.IMAGE_JPEG)
                 .body(imageBytes);
     }
-    
-    @GetMapping("/obterDominio")
-    public String obterDominio(HttpServletRequest request) {
-        String esquema = request.getScheme();
-        String host = request.getServerName();
-        int porta = request.getServerPort();
-        String dominio = esquema + "://" + host + ":" + porta;
-        return dominio;
-    }
+
     
 }
