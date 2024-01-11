@@ -17,14 +17,6 @@ public class ConvitService{
     @Autowired
     ConvitRepository convitRepository;
     
-    public List<Convit> findAll() {
-        return convitRepository.findAll();
-    }
-    
-    public Page<Convit> findAll(Pageable pageable) {
-        return convitRepository.findAll(pageable);
-    }
-    
     public Page<Convit> findConvitsByPerson(Pageable pageable, UserPeople userPeople) {
         return convitRepository.findConvitsByPerson(pageable, userPeople);
     }    

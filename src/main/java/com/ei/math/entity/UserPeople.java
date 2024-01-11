@@ -80,7 +80,6 @@ public class UserPeople implements UserDetails, Serializable{
         this(null, name, email, phone, birthDay, gender, username, password, null, null, null,null);
     }    
     
-    @Order(2)
     @ManyToMany
     @JoinTable(
         name = "tb_roles_users",

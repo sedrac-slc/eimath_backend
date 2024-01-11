@@ -40,5 +40,22 @@ public class Convit implements Serializable{
     
     @Column(columnDefinition = "datetime default now()")
     private LocalDateTime createdAt;
+
+    public Convit(UserPeople userPeople, Group group) {
+        this(null,userPeople.getEmail(),userPeople,group, true, LocalDateTime.now());
+    }
+
+    public Convit(String email, UserPeople userPeople, Group group) {
+        this(null,email,userPeople,group, true, LocalDateTime.now());
+    }
+    
+    public Convit(String email, UserPeople userPeople, Group group, Boolean is_system) {
+        this(email,userPeople,group);
+        this.is_system = is_system;
+    }
+
+
+    
+    
     
 }

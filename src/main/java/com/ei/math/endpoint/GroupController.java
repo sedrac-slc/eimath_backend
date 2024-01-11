@@ -3,7 +3,6 @@ package com.ei.math.endpoint;
 import com.ei.math.entity.Group;
 import com.ei.math.entity.UserPeople;
 import com.ei.math.service.GroupService;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,11 +26,6 @@ public class GroupController {
     
     @Autowired
     private GroupService groupService;
-    
-    @GetMapping
-    public ResponseEntity<List<Group>> findAll(){
-        return ResponseEntity.ok(groupService.findAll());
-    }
     
     @GetMapping("/page")
     public ResponseEntity<Page<Group>> findAllPage(Pageable pageable,@RequestParam String people){

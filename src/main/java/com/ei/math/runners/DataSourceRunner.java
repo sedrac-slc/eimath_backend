@@ -1,9 +1,11 @@
 package com.ei.math.runners;
 
+import com.ei.math.entity.Convit;
 import com.ei.math.entity.Group;
 import com.ei.math.entity.Member;
 import com.ei.math.entity.UserPeople;
 import com.ei.math.enums.GenderEnum;
+import com.ei.math.service.ConvitService;
 import com.ei.math.service.GroupService;
 import com.ei.math.service.MemberService;
 import com.ei.math.service.UserService;
@@ -19,15 +21,18 @@ public class DataSourceRunner implements ApplicationRunner{
     private final UserService userService;
     private final GroupService groupService;
     private final MemberService menberService;
+    private final ConvitService convitService;
     
     public DataSourceRunner(
         UserService userService, 
         GroupService groupService,
-        MemberService menberService
+        MemberService menberService,
+        ConvitService convitService
     ) {
         this.userService = userService;
         this.groupService = groupService;
         this.menberService = menberService;
+        this.convitService = convitService;
     }
     
     private void seed(){
@@ -40,8 +45,8 @@ public class DataSourceRunner implements ApplicationRunner{
                         
         Group grupOne = groupService.save(new Group("Grupo arithmética fácil",personOne));
         Group grupTwo = groupService.save(new Group("Grupo teoria de radical",personOne));
-        Group grupThree =groupService.save(new Group("Grupo de resolução de equação",personOne));
-        Group grupFour =groupService.save(new Group("Grupo de resolução de radical",personTwo));
+        Group grupThree = groupService.save(new Group("Grupo de resolução de equação",personOne));
+        Group grupFour = groupService.save(new Group("Grupo de resolução de radical",personTwo));
         groupService.save(new Group("Grupo de resolução de equação II",personTwo));
         
         menberService.save(new Member(personThree,grupOne));
@@ -56,11 +61,14 @@ public class DataSourceRunner implements ApplicationRunner{
         menberService.save(new Member(personSix,grupThree));
         
         menberService.save(new Member(personSix,grupFour));
+        
+        convitService.save(new Convit(personOne,grupFour));
+        convitService.save(new Convit(personTwo,grupThree));
     }
     
     @Override
     public void run(ApplicationArguments args) throws Exception {
-       // seed();
+       seed();
     }
     
 }
