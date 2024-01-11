@@ -12,10 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,15 +48,25 @@ public class ConvitController {
     @PostMapping
     @Transactional
     public ResponseEntity<Convit> store(@RequestBody Convit convit){
-        Optional.ofNullable(userService.findByEmail(convit.getEmail()))
-                .orElseThrow(MathRegexException::new);
-        convit.setIs_system(Boolean.TRUE);
-        Convit convitNew = convitService.save(convit);
-        emailHistoryService.sendEmailWithHtml(new EmailHistory(
-           emailFrom, convit.getEmail(), "Grupo de estudo", messageGmailUserIN(convitNew)
-         ));
+        Convit convitNew = convit;
+        convitService.findOneExample(convit).ifPresentOrElse((_)->{ }, ()->{
+                Optional.ofNullable(userService.findByEmail(convit.getEmail())).orElseThrow(RuntimeException::new);
+                convit.setIs_system(Boolean.TRUE);
+                Convit find = convitService.save(convit);
+                convitNew.setId(find.getId());
+                emailHistoryService.sendEmailWithHtml(
+                    new EmailHistory(emailFrom, convit.getEmail(), "Grupo de estudo", messageGmailUserIN(convitNew))
+                );
+            }
+        );
         return ResponseEntity.ok(convitNew);
     }
+    
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable String id){
+        convitService.remove(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }    
     
     private String messageGmailUserIN(Convit convit){
         return "<div style='text-align:center;'>"

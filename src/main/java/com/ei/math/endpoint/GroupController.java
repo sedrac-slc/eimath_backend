@@ -1,8 +1,10 @@
 package com.ei.math.endpoint;
 
 import com.ei.math.entity.Group;
+import com.ei.math.entity.Member;
 import com.ei.math.entity.UserPeople;
 import com.ei.math.service.GroupService;
+import com.ei.math.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,6 +28,8 @@ public class GroupController {
     
     @Autowired
     private GroupService groupService;
+    @Autowired
+    private MemberService memberService;
     
     @GetMapping("/page")
     public ResponseEntity<Page<Group>> findAllPage(Pageable pageable,@RequestParam String people){
@@ -52,6 +56,14 @@ public class GroupController {
     public ResponseEntity<Void> delete(@PathVariable String id){
         groupService.remove(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }      
+    }
+    
+    @PostMapping("/by-member")
+    public ResponseEntity<Void> deleteMember(@RequestBody Member member){
+        memberService.findOneExample(member).ifPresent( it->{
+            memberService.remove(it.getId());
+        });
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }    
     
 }

@@ -45,10 +45,10 @@ public class DataSourceRunner implements ApplicationRunner{
                         
         Group grupOne = groupService.save(new Group("Grupo arithmética fácil",personOne));
         Group grupTwo = groupService.save(new Group("Grupo teoria de radical",personOne));
-        Group grupThree = groupService.save(new Group("Grupo de resolução de equação",personOne));
-        Group grupFour = groupService.save(new Group("Grupo de resolução de radical",personTwo));
-        groupService.save(new Group("Grupo de resolução de equação II",personTwo));
+        Group grupThree = groupService.save(new Group("Grupo de resolução de equação",personTwo));
+        Group grupFour = groupService.save(new Group("Grupo de resolução de radical",personThree));
         
+        groupService.save(new Group("Grupo de resolução de equação II",personTwo));
         menberService.save(new Member(personThree,grupOne));
         menberService.save(new Member(personFive,grupOne));
         menberService.save(new Member(personSix,grupOne));
