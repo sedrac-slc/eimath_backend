@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,23 +42,27 @@ public class GroupController {
         return ResponseEntity.ok(groupService.findAllMember(pageable, new UserPeople(people)));
     }    
     
+    @Transactional
     @PostMapping
     public ResponseEntity<Group> store(@RequestBody Group group){
         return ResponseEntity.ok(groupService.save(group));
     }
     
+    @Transactional
     @PutMapping
     public ResponseEntity<Group> update(@RequestBody Group group){
         groupService.save(group);
         return ResponseEntity.ok(group);
     }    
     
+    @Transactional
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable String id){
         groupService.remove(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
     
+    @Transactional
     @PostMapping("/by-member")
     public ResponseEntity<Void> deleteMember(@RequestBody Member member){
         memberService.findOneExample(member).ifPresent( it->{

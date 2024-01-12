@@ -2,8 +2,8 @@ package com.ei.math.endpoint;
 
 import com.ei.math.entity.Convit;
 import com.ei.math.entity.EmailHistory;
+import com.ei.math.entity.Member;
 import com.ei.math.entity.UserPeople;
-import com.ei.math.exception.MathRegexException;
 import com.ei.math.service.ConvitService;
 import com.ei.math.service.EmailHistoryService;
 import com.ei.math.service.UserService;
@@ -49,7 +49,7 @@ public class ConvitController {
     @Transactional
     public ResponseEntity<Convit> store(@RequestBody Convit convit){
         Convit convitNew = convit;
-        convitService.findOneExample(convit).ifPresentOrElse((_)->{ }, ()->{
+        convitService.findOneExample(convit).ifPresentOrElse(it->{ }, ()->{
                 Optional.ofNullable(userService.findByEmail(convit.getEmail())).orElseThrow(RuntimeException::new);
                 convit.setIs_system(Boolean.TRUE);
                 Convit find = convitService.save(convit);
@@ -61,6 +61,12 @@ public class ConvitController {
         );
         return ResponseEntity.ok(convitNew);
     }
+    
+    @Transactional
+    @PostMapping("/accept")
+    public ResponseEntity<Member> accept(@RequestBody Convit convit){
+        return ResponseEntity.ok(convitService.createMember(convit));
+    }    
     
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable String id){

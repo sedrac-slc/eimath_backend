@@ -10,7 +10,6 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class GroupService{
@@ -33,12 +32,10 @@ public class GroupService{
         return groupRepository.findGroupsByPerson(pageable,people);
     }    
     
-    @Transactional
     public Group save(Group group){
         return groupRepository.save(group);
     }
 
-    @Transactional
     public void remove(String id){
         groupRepository.deleteById(UUID.fromString(id));
     }

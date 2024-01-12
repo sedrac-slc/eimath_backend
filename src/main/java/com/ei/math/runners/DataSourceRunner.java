@@ -63,7 +63,7 @@ public class DataSourceRunner implements ApplicationRunner{
         menberService.save(new Member(personSix,grupFour));
         
         convitService.save(new Convit(personOne,grupFour));
-        convitService.save(new Convit(personTwo,grupThree));
+        convitService.save(new Convit(personOne,grupThree));
     }
     
     @Override
