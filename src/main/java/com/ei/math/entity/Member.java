@@ -2,7 +2,6 @@ package com.ei.math.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -36,7 +35,7 @@ public class Member implements Serializable{
     private Group group;  
     
     private LocalDateTime createdAt;
-
+    
     public Member(UserPeople userPeople, Group group) {
         this.userPeople = userPeople;
         this.group = group;

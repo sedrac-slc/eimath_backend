@@ -32,8 +32,17 @@ public class Message implements Serializable{
     @JoinColumn(name = "group_id")
     private Group group;  
 
-    private String text;    
+    private String text;
     
     private LocalDateTime createdAt;
+
+    public Message(UserPeople userPeople, Group group, String text) {
+        this.userPeople = userPeople;
+        this.group = group;
+        this.text = text;
+        this.createdAt = LocalDateTime.now();
+    }
+    
+    
     
 }

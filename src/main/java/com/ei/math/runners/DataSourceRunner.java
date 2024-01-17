@@ -3,11 +3,13 @@ package com.ei.math.runners;
 import com.ei.math.entity.Convit;
 import com.ei.math.entity.Group;
 import com.ei.math.entity.Member;
+import com.ei.math.entity.Message;
 import com.ei.math.entity.UserPeople;
 import com.ei.math.enums.GenderEnum;
 import com.ei.math.service.ConvitService;
 import com.ei.math.service.GroupService;
 import com.ei.math.service.MemberService;
+import com.ei.math.service.MessageService;
 import com.ei.math.service.UserService;
 import java.time.LocalDate;
 import java.time.Month;
@@ -20,22 +22,26 @@ public class DataSourceRunner implements ApplicationRunner{
 
     private final UserService userService;
     private final GroupService groupService;
-    private final MemberService menberService;
+    private final MemberService memberService;
     private final ConvitService convitService;
+    private final MessageService messageService;
     
     public DataSourceRunner(
         UserService userService, 
         GroupService groupService,
-        MemberService menberService,
-        ConvitService convitService
+        MemberService memberService,
+        ConvitService convitService,
+        MessageService messageService
     ) {
         this.userService = userService;
         this.groupService = groupService;
-        this.menberService = menberService;
+        this.memberService = memberService;
         this.convitService = convitService;
+        this.messageService = messageService;
     }
     
     private void seed(){
+        
         UserPeople personOne = userService.save(new UserPeople("Sedrac Calupeteca", "slcsedrac@gmail.com", "936269780", LocalDate.of(1998, Month.JANUARY, 31), GenderEnum.MALE, "sedrac", "12345678"));
         UserPeople personTwo = userService.save(new UserPeople("Lucas Calupeteca", "sedraccalupeteca@gmail.com", "958360876", LocalDate.of(1998, Month.JANUARY, 31), GenderEnum.MALE, "lucas", "12345678"));
         UserPeople personThree = userService.save(new UserPeople("Sandra Gomes", "sandragomes@yahoo.com", "923451234", LocalDate.of(2000, Month.MARCH, 20), GenderEnum.FEMALE, "sandra", "12345678"));
@@ -48,19 +54,25 @@ public class DataSourceRunner implements ApplicationRunner{
         Group grupThree = groupService.save(new Group("Grupo de resolução de equação",personTwo));
         Group grupFour = groupService.save(new Group("Grupo de resolução de radical",personThree));
         
-        groupService.save(new Group("Grupo de resolução de equação II",personTwo));
-        menberService.save(new Member(personThree,grupOne));
-        menberService.save(new Member(personFive,grupOne));
-        menberService.save(new Member(personSix,grupOne));
+        memberService.save(new Member(personThree,grupOne));
+        memberService.save(new Member(personFive,grupOne));
+        memberService.save(new Member(personSix,grupOne));
+        memberService.save(new Member(personFour,grupTwo));
+        memberService.save(new Member(personTwo,grupTwo));
+        memberService.save(new Member(personOne,grupTwo));
+        memberService.save(new Member(personFive,grupThree));
+        memberService.save(new Member(personSix,grupThree));
+        memberService.save(new Member(personSix,grupFour));
         
-        menberService.save(new Member(personFour,grupTwo));
-        menberService.save(new Member(personTwo,grupTwo));
-        menberService.save(new Member(personOne,grupTwo));
-        
-        menberService.save(new Member(personFive,grupThree));
-        menberService.save(new Member(personSix,grupThree));
-        
-        menberService.save(new Member(personSix,grupFour));
+        messageService.save(new Message(personThree,grupOne,"Bom dia pessoal, esta tudo bem"));
+        messageService.save(new Message(personFive,grupOne,"Eu estou bem e com você?"));
+        messageService.save(new Message(personSix,grupOne,"É um belo dia para falarmos sobre matemática pessoal"));
+        messageService.save(new Message(personFour,grupTwo,"Vamos conversar sobre fração?"));
+        messageService.save(new Message(personTwo,grupTwo,"Esta bem iremos falar sobre fração"));
+        messageService.save(new Message(personOne,grupTwo,"O que tenhem dúvida, pessoal"));
+        messageService.save(new Message(personFive,grupThree,"Que belo dia falos realizar alguns cálculos, para animar o dia"));
+        messageService.save(new Message(personSix,grupThree,"Pode ser, para mí será ótimo"));
+        messageService.save(new Message(personSix,grupFour,"Que aborrecido, toda hora estudar isso cansa"));        
         
         convitService.save(new Convit(personOne,grupFour));
         convitService.save(new Convit(personOne,grupThree));
