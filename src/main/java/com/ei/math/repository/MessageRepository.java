@@ -11,6 +11,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MessageRepository extends JpaRepository<Message,UUID>{
-    @Query("SELECT m FROM Member m WHERE m.group = :group")
+    @Query("SELECT m FROM Message m WHERE m.group = :group")
     Page<Message> findMessagesByGroup(Pageable pageable,Group group);
 }

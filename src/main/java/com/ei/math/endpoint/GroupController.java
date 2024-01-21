@@ -32,6 +32,12 @@ public class GroupController {
     @Autowired
     private MemberService memberService;
     
+    @GetMapping("/{id}")
+    public ResponseEntity<Group> findById(@PathVariable String id){
+        Group group = groupService.findById(id).orElseThrow(RuntimeException::new);
+        return new ResponseEntity(group,HttpStatus.OK);
+    }
+    
     @GetMapping("/page")
     public ResponseEntity<Page<Group>> findAllPage(Pageable pageable,@RequestParam String people){
         return ResponseEntity.ok(groupService.findAll(pageable,new UserPeople(people)));

@@ -4,6 +4,7 @@ import com.ei.math.entity.Group;
 import com.ei.math.entity.UserPeople;
 import com.ei.math.repository.GroupRepository;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -15,6 +16,10 @@ import org.springframework.stereotype.Service;
 public class GroupService{
     @Autowired
     GroupRepository groupRepository;
+    
+    public Optional<Group> findById(String id){
+        return groupRepository.findById(UUID.fromString(id));
+    }
     
     public List<Group> findAll() {
         return groupRepository.findAll();
