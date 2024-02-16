@@ -48,7 +48,7 @@ public class FileStorageController {
         }catch(IOException e){
             return ResponseEntity.badRequest().build();
         }
-    }
+    }  
     
     @GetMapping("/download/{fileName:.+}")
     public ResponseEntity<Resource> downloadFile(@RequestParam String fileName, HttpServletRequest request){
