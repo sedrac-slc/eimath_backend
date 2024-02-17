@@ -35,10 +35,8 @@ public class Convit implements Serializable{
     @JoinColumn(name = "group_id")
     private Group group;  
     
-    @Column(columnDefinition = "tinyint(1) default 0")
     private Boolean is_system;    
     
-    @Column(columnDefinition = "datetime default now()")
     private LocalDateTime createdAt;
 
     public Convit(UserPeople userPeople, Group group) {
