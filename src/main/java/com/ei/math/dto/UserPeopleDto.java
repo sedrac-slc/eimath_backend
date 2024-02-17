@@ -12,9 +12,11 @@ import lombok.Data;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.time.LocalDate;
 
 @Data
-public class UserPeopleDto {
+public class UserPeopleDto implements Serializable{
     @NotEmpty
     @NotNull
     private String name;
@@ -29,7 +31,7 @@ public class UserPeopleDto {
     private String phone;
     @NotNull 
     @Temporal(TemporalType.DATE)
-    private Date birthDay;
+    private LocalDate birthDay;
     @NotNull
     @Column(name = "gender")
     @Enumerated(EnumType.STRING)

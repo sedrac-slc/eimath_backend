@@ -45,7 +45,7 @@ public class AuthorizationController {
     }   
     
     @PostMapping("/register")
-    public ResponseEntity<ResponseTokenUser> create(@RequestBody @Valid UserPeopleDto people){
+    public ResponseEntity<?> create(@RequestBody @Valid UserPeopleDto people){
         try{
             UserPeople userPeople = new UserPeople();
             BeanUtils.copyProperties(people, userPeople);

@@ -1,15 +1,10 @@
 package com.ei.math.endpoint;
 
-import com.ei.math.entity.Group;
 import com.ei.math.entity.UserPeople;
 import com.ei.math.records.PasswordDto;
 import com.ei.math.service.UserService;
-import java.util.List;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
