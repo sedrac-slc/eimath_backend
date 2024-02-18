@@ -34,4 +34,9 @@ public class ArithmeticParams {
      private String methodArithmeticSumOrSub = "random";
      @Builder.Default
      private String methodArithmeticMultOrDiv = "random";
+     
+     public ArithmeticParams(String expression){
+         this.expression = expression;
+     }
+     
 }

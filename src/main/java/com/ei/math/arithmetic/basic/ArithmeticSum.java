@@ -36,6 +36,7 @@ public class ArithmeticSum extends ArithOperaction implements ArithListOper{
     public MathResult sequencial(List<Fraction> fractions) {
         init();
         long start = System.currentTimeMillis();
+        System.out.println("arithmeticSum:sequecial");
         
         fractionSum.setMethod(arithmeticParams.getMethodFractionSum());
         fractionSum.setListGeneratorExpression(listGeneratorExpression);
@@ -88,6 +89,7 @@ public class ArithmeticSum extends ArithOperaction implements ArithListOper{
         init();
         long start = System.currentTimeMillis();
         int tam = fractions.size();
+        System.out.println("arithmeticSum:minMultiploCommon");
         fractionSum.setMethod(arithmeticParams.getMethodFractionSum());
         if(tam == 0) return MathResult.builder().build();
         if(tam == 1) return ArithmeticPartStepMethos.of(fractions.get(0));
@@ -150,15 +152,17 @@ public class ArithmeticSum extends ArithOperaction implements ArithListOper{
     }
      
     private MathResult chooseMethod(List<Fraction> fractionsOper, String method) {
-       switch(method){
-            case METHOD_SEQUENCIAL:
-                return sequencial(fractionsOper);
-            case METHOD_MMC:
-                return  minMultiploCommon(fractionsOper);
-            default:
-                boolean par = ThreadLocalRandom.current().nextInt(1, 10) % 2 == 0;
-                return par ? sequencial(fractionsOper) : minMultiploCommon(fractionsOper);
-        }
+       if(method == null) return randomMethod(fractionsOper);
+       return switch (method) {
+            case METHOD_SEQUENCIAL -> sequencial(fractionsOper);
+            case METHOD_MMC -> minMultiploCommon(fractionsOper);
+            default -> randomMethod(fractionsOper);
+        };
+    }
+    
+    private MathResult randomMethod(List<Fraction> fractionsOper){
+        boolean par = ThreadLocalRandom.current().nextInt(1, 10) % 2 == 0;
+        return par ? sequencial(fractionsOper) : minMultiploCommon(fractionsOper);
     }
     
 }

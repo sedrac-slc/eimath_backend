@@ -128,7 +128,6 @@ public class ArithmeticUtil {
         long start = fractions.get(0).getNumerator();
         final int tam = fractions.size();
         List<Step> steps = new ArrayList<>();
-        System.out.println("aritmeticUtil:commun");
         if(listGeneratorExpression){
             steps.add(ArithmeticFormatter.start(fractions));
         }        
@@ -145,6 +144,7 @@ public class ArithmeticUtil {
                 .steps(steps)
                 .timeMilliseconds(String.format("%s ms",(fin-ini)))
                 .className("generic")
+                .object(fraction)
                 .pack("generic")
                 .build();
     }

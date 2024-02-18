@@ -48,18 +48,14 @@ public class ConvitController {
     @PostMapping
     @Transactional
     public ResponseEntity<Convit> store(@RequestBody Convit convit){
-        Convit convitNew = convit;
-        convitService.findOneExample(convit).ifPresentOrElse(it->{ }, ()->{
-                Optional.ofNullable(userService.findByEmail(convit.getEmail())).orElseThrow(RuntimeException::new);
-                convit.setIs_system(Boolean.TRUE);
-                Convit find = convitService.save(convit);
-                convitNew.setId(find.getId());
-                emailHistoryService.sendEmailWithHtml(
-                    new EmailHistory(emailFrom, convit.getEmail(), "Grupo de estudo", messageGmailUserIN(convitNew))
-                );
-            }
+        UserPeople person = Optional.ofNullable(userService.findByEmail(convit.getEmail())).orElseThrow(RuntimeException::new);
+        convit.setUserPeople(person);
+        convit.setIs_system(Boolean.TRUE);
+        Convit save = convitService.save(convit);
+        emailHistoryService.sendEmailWithHtml(
+            new EmailHistory(emailFrom, convit.getEmail(), "Grupo de estudo", messageGmailUserIN(save))
         );
-        return ResponseEntity.ok(convitNew);
+        return ResponseEntity.ok(save);
     }
     
     @Transactional

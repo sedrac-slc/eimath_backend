@@ -152,15 +152,17 @@ public class ArithmeticSub extends ArithOperaction implements ArithListOper {
     }    
     
     private MathResult chooseMethod(List<Fraction> fractionsOper, String method) {
-       switch(method){
-            case METHOD_SEQUENCIAL:
-                return sequencial(fractionsOper);
-            case METHOD_MMC:
-                return  minMultiploCommon(fractionsOper);
-            default:
-                boolean par = ThreadLocalRandom.current().nextInt(1, 10) % 2 == 0;
-                return par ? sequencial(fractionsOper) : minMultiploCommon(fractionsOper);
-        }
+       if(method == null) return randomMethod(fractionsOper);
+       return switch (method) {
+            case METHOD_SEQUENCIAL -> sequencial(fractionsOper);
+            case METHOD_MMC -> minMultiploCommon(fractionsOper);
+            default -> randomMethod(fractionsOper);
+        };
     }
      
+    private MathResult randomMethod(List<Fraction> fractionsOper){
+        boolean par = ThreadLocalRandom.current().nextInt(1, 10) % 2 == 0;
+        return par ? sequencial(fractionsOper) : minMultiploCommon(fractionsOper);
+    }    
+    
 }
