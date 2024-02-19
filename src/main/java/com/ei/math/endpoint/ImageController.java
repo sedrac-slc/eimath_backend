@@ -1,6 +1,5 @@
 package com.ei.math.endpoint;
 
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
@@ -25,6 +24,5 @@ public class ImageController {
                 .contentType(MediaType.IMAGE_JPEG)
                 .body(imageBytes);
     }
-
     
 }

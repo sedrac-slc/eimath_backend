@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -41,7 +42,7 @@ public class FileStorageController {
             
             String fileUrlDownload = ServletUriComponentsBuilder.fromCurrentContextPath()
                     .path("/pub/file/download")
-                    .path(fileName)
+                    .path("/"+fileName)
                     .toUriString();
             
             return ResponseEntity.ok("upload compled: "+fileUrlDownload);
@@ -51,7 +52,7 @@ public class FileStorageController {
     }  
     
     @GetMapping("/download/{fileName:.+}")
-    public ResponseEntity<Resource> downloadFile(@RequestParam String fileName, HttpServletRequest request){
+    public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request){
         try{
             Path filePath = fileStorageLocation.resolve(fileName).normalize();
             Resource resource = new UrlResource(filePath.toUri());
@@ -79,5 +80,14 @@ public class FileStorageController {
         }
     }
     
+    @GetMapping("/image/{fileName:.+}")
+    public ResponseEntity<byte[]> getFile(@PathVariable String fileName) throws IOException {
+        Path filePath = fileStorageLocation.resolve(fileName).normalize();
+        Resource resource = new UrlResource(filePath.toUri());
+        byte[] imageBytes = Files.readAllBytes(resource.getFile().toPath());
+        return ResponseEntity.ok()
+                .contentType(MediaType.IMAGE_JPEG)
+                .body(imageBytes);
+    }
     
 }

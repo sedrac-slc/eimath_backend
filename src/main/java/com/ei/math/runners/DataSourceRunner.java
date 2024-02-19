@@ -40,6 +40,11 @@ public class DataSourceRunner implements ApplicationRunner{
         this.messageService = messageService;
     }
     
+    @Override
+    public void run(ApplicationArguments args) throws Exception {
+       seed();
+    }    
+    
     private void seed(){
         
         UserPeople personOne = userService.save(new UserPeople("Sedrac Calupeteca", "slcsedrac@gmail.com", "936269780", LocalDate.of(1998, Month.JANUARY, 31), GenderEnum.MALE, "sedrac", "12345678"));
@@ -77,10 +82,5 @@ public class DataSourceRunner implements ApplicationRunner{
         convitService.save(new Convit(personOne,grupFour));
         convitService.save(new Convit(personOne,grupThree));
     }
-    
-    @Override
-    public void run(ApplicationArguments args) throws Exception {
-       seed();
-    }
-    
+     
 }
