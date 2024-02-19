@@ -5,6 +5,7 @@ import com.ei.math.general.Step;
 import com.ei.math.arithmetic.operator.ArithmeticSumOrSub;
 import com.ei.math.arithmetic.params.ArithmeticParams;
 import com.ei.math.fraction.Fraction;
+import com.ei.math.general.StepMap;
 import com.ei.math.radical.Radical;
 import com.ei.math.radical.RadicalConverter;
 import com.ei.math.radical.RadicalRegex;
@@ -67,21 +68,31 @@ public class RadicalSumOrSub {
         arithmeticSumOrSub.setListGeneratorExpression(true);
         
         List<Step> steps = new ArrayList<>();
+        List<StepMap> stepMaps = new ArrayList<>();
         
         radicals = reduce(radicals, steps);
         
         Map<RadicalRoot, List<Radical>> collect = radicals.stream().collect(Collectors.groupingBy(Radical::root));
-        
+  
         if(collect.size() == 1){
             for (Map.Entry<RadicalRoot, List<Radical>> entry : collect.entrySet()) 
                 radicalRootEqual(entry.getValue(),entry.getKey(), steps);
         }else{
+            List<Radical> result = new ArrayList<>();
+            for (Map.Entry<RadicalRoot, List<Radical>> entry : collect.entrySet()) {
+                List<Fraction> toList = entry.getValue().stream().map(Radical::getCoefficient).toList();
+                MathResult solve = arithmeticSumOrSub.solve(toList);
+                stepMaps.add(new StepMap(solve.getExpression(), solve.getSteps()));
+                result.add(Radical.of(solve.fractionResult().getFraction(), entry.getKey().getBase(), entry.getKey().getExpoent()));
+            }
             
+            steps.add(RadicalFormatter.setp(result));
         }
         
         long finish = System.currentTimeMillis();
         return MathResult.builder()
                 .steps(steps)
+                .stepGroups(stepMaps)
                 .className(getClass().getName())
                 .timeMilliseconds(String.format("%s", finish - start))
                 .method("grouping")
@@ -102,12 +113,12 @@ public class RadicalSumOrSub {
         return resolve(list);
     }
    
-   /*
+  /*
     public static void main(String[] args) {
         RadicalSumOrSub radicalSumOrSub = new RadicalSumOrSub();
-        MathResult resolve = radicalSumOrSub.resolve("5c2^1/2+8c8^1/2");
-        // MathResult resolve = radicalSumOrSub.resolve("5c2^1/2+8c8^1/2+2c2^1/2");
-        System.out.println(resolve.getSteps());
+        //MathResult resolve = radicalSumOrSub.resolve("5c2^1/2+8c8^1/2");
+        //MathResult resolve = radicalSumOrSub.resolve("5c2^1/2+8c2^1/2-9c2^1/2+2c5^1/3+7c5^1/3");
+        //System.out.println(resolve);
        // System.out.println(RadicalUtil.reduce(Radical.of(Fraction.of(8), Fraction.of(8) )));
     }
 */
