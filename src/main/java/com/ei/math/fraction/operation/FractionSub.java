@@ -146,16 +146,18 @@ public class FractionSub extends FractionOper{
      */   
     @Override
     public MathResult solve(Fraction first, Fraction second, String method) {
-        switch(method){
-            case METHOD_MMC:
-                return minMultiploCommon(first, second);
-            case METHOD_CROSS_SYSTEM:
-                return crossSystem(first, second);
-            default:
-                boolean par = ThreadLocalRandom.current().nextInt(1,10) % 2 == 0;
-                return par ? minMultiploCommon(first, second) : crossSystem(first, second);
-        }
-    }  
+        if(method == null) return randomMethod(first, second);
+        return switch (method){
+            case METHOD_MMC ->  minMultiploCommon(first, second);
+            case METHOD_CROSS_SYSTEM -> crossSystem(first, second);
+            default -> randomMethod(first, second);
+        };
+    }
+    
+     private MathResult randomMethod(Fraction first, Fraction second){
+        boolean par = ThreadLocalRandom.current().nextInt(1,10) % 2 == 0;
+       return par ? minMultiploCommon(first, second) : crossSystem(first, second);
+    }
     
 }
  

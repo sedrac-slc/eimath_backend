@@ -53,7 +53,8 @@ public class ArithmeticGroup extends ArithOperaction{
     private String resolve(String expression){
         int tam;
         String group;
-        expression = prepare(expression);        
+        expression = prepare(expression);     
+        arithmeticOper.setArithmeticParams(arithmeticParams);
         while(expression.matches(".*"+ArithmeticRegex.GROUP+".*")){
             Pattern pattern = Pattern.compile(ArithmeticRegex.GROUP);
             Matcher matcher = pattern.matcher(expression);
@@ -89,7 +90,7 @@ public class ArithmeticGroup extends ArithOperaction{
        
         if(expression.matches(".*"+ArithmeticRegex.GROUP+".*")) 
             expression = resolve(expression);
-        
+        arithmeticOper.setArithmeticParams(arithmeticParams);
         mathResult = arithmeticOper.solve(expression);
         fractionResult = mathResult.fractionResult();
         stepGroupsPrep.addAll(mathResult.getStepGroups());
