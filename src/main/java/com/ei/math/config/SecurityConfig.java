@@ -53,7 +53,10 @@ public class SecurityConfig {
         return http.cors(c -> c.configurationSource(corsConfigurationSource())).csrf(c -> c.disable())
                 .authorizeHttpRequests(c -> c.requestMatchers(
                  "/emails/**", 
-                 "/authorization/**", 
+                 "/authorization/**",
+                 "/chat-socket/**",
+                 "/chat/**",
+                 "/topic/**",
                  "/arithmetic/**", 
                  "/radical/**", 
                  "/equation/**",

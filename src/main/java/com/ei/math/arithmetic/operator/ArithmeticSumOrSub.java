@@ -179,19 +179,20 @@ public class ArithmeticSumOrSub extends ArithOperaction implements ArithListOper
     }
     
     private MathResult chooseMethod(List<Fraction> fractions, String method) {
-       switch(method){
-            case METHOD_SEQUENCIAL:
-                return sequencial(fractions);
-            case METHOD_MMC:
-                return  minMultiploCommon(fractions);
-            case METHOD_GROUPING:
-                return  grouping(fractions);
-            default:
-                int num = ThreadLocalRandom.current().nextInt(1, 30);
-                if(num < 10) return sequencial(fractions);
-                if(num < 20) return minMultiploCommon(fractions);
-                return grouping(fractions);
-      }
+       if(method == null) return randomMethod(fractions);
+       return switch(method){
+            case METHOD_SEQUENCIAL -> sequencial(fractions);
+            case METHOD_MMC -> minMultiploCommon(fractions);
+            case METHOD_GROUPING -> grouping(fractions);
+            default -> randomMethod(fractions);
+        };
+    }
+    
+    private MathResult randomMethod(List<Fraction> fractions){
+        int num = ThreadLocalRandom.current().nextInt(1, 30);
+        if(num < 10) return sequencial(fractions);
+        if(num < 20) return minMultiploCommon(fractions);
+        return grouping(fractions);
     }
 
     @Override

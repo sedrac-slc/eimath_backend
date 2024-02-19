@@ -30,8 +30,7 @@ public class RadicalRoot implements Serializable{
         boolean equals = !expoent.positive().equals(Fraction.of(0));         
         return  "<div class=\"rad-group\">"
                    +"<div class=\"rad\">"
-                        +sup
-                        +(equals ? "<div>&radic;</div>" : "")
+                        +sup +(equals ? "<div>&radic;</div>" : "")
                    +"</div>"
                    +(equals ? "<div class=\"rad-base\">"+base.text()+"</div>" : "")
               +"</div>";

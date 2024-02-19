@@ -29,6 +29,4 @@ public class Step {
         return "Step{" + "text=" + text + '}';
     }
     
-    
-    
 }

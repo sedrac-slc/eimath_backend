@@ -3,9 +3,21 @@ package com.ei.math.radical.text;
 import com.ei.math.general.Step;
 import com.ei.math.radical.Radical;
 import com.ei.math.radical.RadicalRoot;
+import com.ei.math.radical.register.RadicalMessage;
 import java.util.List;
+import java.util.Locale;
 
 public class RadicalFormatter {
+    
+    public static final  RadicalMessage message;
+    
+    static{
+        message = new RadicalMessage();
+    }  
+    
+    public static void setLocale(Locale locale){
+        message.setLocale(locale);
+    }    
     
     public static Step joinStepForRadical(Radical radical,Step step){
         String text = RadicalText.joinRadical(step,radical);
@@ -36,11 +48,20 @@ public class RadicalFormatter {
         return Step.builder().text(text).html(html).build();
     }    
     
-    public static Step setp(List<Radical> radicals){
+    private static Step setpOrFinish(List<Radical> radicals, String key){
         String text = RadicalText.setp(radicals);
-        String html = RadicalHtml.setp(radicals);
-        return Step.builder().text(text).html(html).build();
-    }        
+        String html = "<div class='mt-2'>"+RadicalHtml.setp(radicals)+"</div>";
+        String msg =  message.getString(key);
+        return Step.builder().text(text).html(html).message(text).message(msg).build();
+    }    
+
+    public static Step setp(List<Radical> radicals){
+        return setpOrFinish(radicals,"step.radical.start");
+    }
+    
+    public static Step finish(List<Radical> radicals){
+        return setpOrFinish(radicals,"step.radical.finish");
+    }    
 
     public static Step joinRadicalRoot(Step step, RadicalRoot root) {
         String text = RadicalText.joinRadicalRoot(step,root);

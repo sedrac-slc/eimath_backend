@@ -40,7 +40,7 @@ public class RadicalHtml {
         Fraction coefficient = signal && radical.getCoefficient().isNegative() ? radical.getCoefficient().positive() : radical.getCoefficient();
         String coeffi = !coefficient.equals(Fraction.of(1)) ? "<div class=\"coefficient\">"+coefficient.text()+"</div>" : "";
         return "<div class=\"radical\">"
-                   +sig + coeffi +RadicalRoot.html(coefficient, coefficient)
+                    +sig + coeffi +RadicalRoot.html(radical.getBase(), radical.getExpoent())
               +"</div>";
     }
     
@@ -54,7 +54,7 @@ public class RadicalHtml {
         String join = "";
         for (int i = 0; i < radicals.size(); i++) 
             join += radicals.get(i).html(i != 0);
-        return join;
+        return "<div class=\"rad-dflex\">"+join+"</div>";
     }
 
     public static String joinRadicalRoot(Step step, RadicalRoot root) {
